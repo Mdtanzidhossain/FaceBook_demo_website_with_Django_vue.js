@@ -1,0 +1,17 @@
+{% extends 'facebook2/base.html' %}
+
+{% block body %}
+	<div class="ui text container">
+		<div class="ui center aligned segment">
+		{% if user.is_authenticated %}
+			<i class="huge circular blue user icon"></i>
+			<h2>{{ user.first_name }} {{ user.last_name }}</h2>
+			<p>{{ user.email }}</p>
+
+		{% else %}
+			<i class="huge orange exclamation icon"></i>
+			<h3>You are not logged in</h3>
+		</div>
+	{% endif %}
+	</div>
+{% endblock body %} 

@@ -1,0 +1,71 @@
+{% extends 'facebook2/base.html' %}
+
+{% block body %} 
+	<script src="https://unpkg.com/vue"></script>
+	<!-- Rendered from base.html -->
+	<div class="ui text container">
+		<div class="ui raised segment">
+			<form class="ui form" method="POST" action="{% url 'createpost' %}">
+				{% csrf_token %}
+			  <div class="field">
+			  	<textarea name="content" placeholder="What's on your mind?" required=""></textarea>
+			  </div>
+			  <div class="field">
+			    <input type="text" name="tags" placeholder="Tags" maxlength="100" required="">
+			  </div>
+			  <button class="ui primary fluid big button" type="submit">Create Post</button>
+			</form>
+		</div>
+		<div class="ui basic loading segment" id="app">
+			{% for m in messages %}
+			  <p class="ui green message">{{ m }}</p>
+			{% endfor %}
+
+		
+		<div class="ui fluid card" v-for="p in posts">
+		  <div class="content">
+		  	
+		    <div class="header">
+		    	<i class="small circular user icon"></i>
+		    	<% p.author_id %>
+		    </div>
+		    <div class="meta"><% p.date %></div>
+		    <div class="description">
+		      <p><% p.content %></p>
+		    </div>
+		  </div>
+		  <div class="extra right aligned content">
+		    <i class="tag icon"></i>
+		    <% p.tag %>
+		  </div>
+		</div>
+		
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	let app = new Vue({
+		el: '#app',
+		delimiters: ['<%', '%>'],
+		data: {
+		posts : []
+		},
+		methods: {
+		populate: function(){
+				
+			// this.fetched = "Please wait, loading data...";
+			fetch("http://localhost/api/stories")
+				.then(response => response.json())
+				.then(data => {
+					this.posts = data;
+					document.querySelector('#app').classList.remove('loading');
+				});
+			}
+		},
+		created: function(){
+			this.populate();
+		}
+		});
+	</script>
+{% endblock body %} 
+

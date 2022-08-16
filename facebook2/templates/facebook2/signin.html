@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Facebook2 - Sign in page</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+</head>
+<body style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+
+	<div class="ui segment" style="min-width: 350px;">
+		<h2 style="text-align: center;">Sign in to Facebook 2</h2>
+		<form class="ui form" method="POST" action="{% url 'signin' %}">
+			{% csrf_token %}
+		  <div class="field">
+		    <label>Username</label>
+		    <input type="text" name="user" placeholder="User Name">
+		  </div>
+		  <div class="field">
+		    <label>Password</label>
+		    <input type="password" name="pass" placeholder="Password">
+		  </div>
+		  {% for m in messages %}
+		  <p class="ui red message">{{ m }}</p>
+		  {% endfor %}
+		  <button class="ui primary fluid button" type="submit">Sign In</button>
+		</form>
+	</div>
+
+</body>
+</html>

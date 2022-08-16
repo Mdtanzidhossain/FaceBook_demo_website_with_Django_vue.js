@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Facebook2 {% block title %} {% endblock title %} </title>
+	<!-- This is to defined the viewport and how the app must behave when
+	on full screen. This is required too. -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="manifest" href="{% static 'manifest.json' %}">
+	<link rel="icon" type="image/x-icon" href="{% static 'icons/icon-512x512.png' %}">
+	<meta name="theme-color" content="#4267B2">
+	<link rel="apple-touch-icon" href="{% static 'icons/icon-512x512.png' %}">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+	<link rel="stylesheet" href="{% static 'facebook2/mystyle.css' %}">
+</head>
+<body>
+	<div class="ui secondary menu" id="topbar">
+	  <div class="header item" id="logo">
+	    Facebook2
+	  </div>
+
+	  <div class="ui right secondary menu">
+	  	<a class="item" href="{% url 'profile-page' %}">
+		    Profile
+		  </a>
+		  <a class="item" href="{% url 'signout' %}">
+		    Sign Out
+		  </a>
+		  
+	  </div>
+	</div>
+
+	{% block body %} {% endblock body %} 
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+	<script>
+	if (navigator.serviceWorker)
+	navigator.serviceWorker.register('{% url "sw.js" %}');
+	</script>
+</body>
+</html>
